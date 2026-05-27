@@ -1,0 +1,53 @@
+{
+  "name": "easii-md-preview",
+  "displayName": "Easii Markdown Preview",
+  "version": "1.0.0",
+  "description": "GitHub-like Markdown preview for VS Code and Cursor.",
+  "main": "./out/extension.js",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:easiiMdPreview.openPreview"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "easiiMdPreview.openPreview",
+        "title": "Easii Markdown Preview: Open Preview",
+        "category": "Easii Markdown Preview"
+      }
+    ]
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "typecheck": "tsc -p ./ --noEmit",
+    "watch": "tsc -watch -p ./",
+    "test": "npm run compile"
+  },
+  "keywords": [
+    "markdown",
+    "preview",
+    "vscode"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/markdown-it": "^14.1.2",
+    "@types/sanitize-html": "^2.16.1",
+    "@types/vscode": "^1.120.0",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "github-markdown-css": "^5.9.0",
+    "markdown-it": "^14.2.0",
+    "markdown-it-task-lists": "^2.1.1",
+    "sanitize-html": "^2.17.4"
+  }
+}
