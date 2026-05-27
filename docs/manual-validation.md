@@ -37,10 +37,11 @@ console.log('hello preview');
 - [ ] The preview has GitHub-like Markdown styling.
 - [ ] Unsafe script-like input does not execute.
 - [ ] Running the command on a non-Markdown file shows a clear message instead of a broken panel.
+- [ ] Editing the previewed Markdown file updates the preview after a short delay.
+- [ ] Rapid typing does not visibly thrash the preview on every keystroke.
+- [ ] Closing the preview stops further updates when the source file keeps changing.
 
 ## Known MVP Limits
-
-- Preview does not auto-refresh on edits yet.
 - Scroll sync is deferred.
 - Syntax highlighting, Mermaid, and KaTeX are deferred.
 - Advanced relative asset/link handling is deferred.

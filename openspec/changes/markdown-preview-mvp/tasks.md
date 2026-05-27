@@ -59,10 +59,10 @@ Validation evidence:
 
 ### 5. Debounced Refresh Flow
 
-- [ ] 5.1 Create `src/utils/debounce.ts` or equivalent helper.
-- [ ] 5.2 Subscribe to document change events for the previewed document.
-- [ ] 5.3 Refresh the panel after a debounce interval, not on every keystroke.
-- [ ] 5.4 Dispose listeners/timers when the preview closes.
+- [x] 5.1 Create `src/utils/debounce.ts` or equivalent helper.
+- [x] 5.2 Subscribe to document change events for the previewed document.
+- [x] 5.3 Refresh the panel after a debounce interval, not on every keystroke.
+- [x] 5.4 Dispose listeners/timers when the preview closes.
 
 Validation evidence:
 - Editing a previewed Markdown document updates the preview after a short delay.
