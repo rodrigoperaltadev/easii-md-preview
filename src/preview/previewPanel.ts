@@ -1,11 +1,17 @@
 import * as vscode from "vscode";
 import { renderMarkdown } from "../markdown/renderer";
+import { debounce } from "../utils/debounce";
 import { getWebviewHtml } from "./webviewHtml";
+
+const REFRESH_DEBOUNCE_MS = 250;
 
 export class PreviewPanel {
 	private static currentPanel: PreviewPanel | undefined;
 
 	private readonly disposables: vscode.Disposable[] = [];
+	private readonly debouncedUpdate = debounce(() => {
+		this.update();
+	}, REFRESH_DEBOUNCE_MS);
 
 	private constructor(
 		private readonly panel: vscode.WebviewPanel,
@@ -13,6 +19,20 @@ export class PreviewPanel {
 		private document: vscode.TextDocument,
 	) {
 		this.panel.onDidDispose(() => this.dispose(), null, this.disposables);
+
+		const changeSubscription = vscode.workspace.onDidChangeTextDocument(
+			(event) => {
+				if (
+					event.document.uri.toString() !== this.document.uri.toString()
+				) {
+					return;
+				}
+
+				this.debouncedUpdate();
+			},
+		);
+		this.disposables.push(changeSubscription);
+
 		this.update(document);
 	}
 
@@ -52,6 +72,7 @@ export class PreviewPanel {
 
 	dispose(): void {
 		PreviewPanel.currentPanel = undefined;
+		this.debouncedUpdate.cancel();
 
 		while (this.disposables.length > 0) {
 			this.disposables.pop()?.dispose();
