@@ -6,18 +6,21 @@ Estado actual: extensión funcional en dev host (preview, export HTML/PDF, Shiki
 
 ## A. Identidad y cuenta
 
-- [ ] Crear cuenta de [Visual Studio Marketplace Publisher](https://marketplace.visualstudio.com/manage)
-- [ ] Definir **Publisher ID** (único, no se cambia fácil)
-- [ ] Vincular Azure DevOps / PAT para `vsce publish`
-- [ ] Decidir licencia final (hoy `ISC` en `package.json`; muchas extensiones usan MIT)
-- [ ] Repo público en GitHub (o URL de código fuente en manifest)
+Guía detallada: [`docs/marketplace-publisher-setup.md`](./marketplace-publisher-setup.md)
+
+- [x] Crear cuenta de [Visual Studio Marketplace Publisher](https://marketplace.visualstudio.com/manage)
+- [x] Definir **Publisher ID**: `RodrigoAlexisPeralta`
+- [ ] Vincular Azure DevOps / PAT para `vsce publish` (si publicás por CLI)
+- [x] Licencia `ISC` — `LICENSE` en raíz
+- [x] Repo: `https://github.com/rodrigoperaltadev/easii-md-preview`
 
 ---
 
 ## B. Manifest (`package.json`)
 
-- [ ] `publisher`
-- [ ] `repository`, `homepage`, `bugs`
+- [x] `publisher`: `RodrigoAlexisPeralta`
+- [x] `repository`, `homepage`, `bugs`
+- [x] `author`
 - [ ] `icon` → `images/icon.png` (128×128 PNG)
 - [ ] `galleryBanner` (opcional, 220×140)
 - [ ] `categories`: p. ej. `Other` → `Formatters` / `Visualization` según enfoque
@@ -39,11 +42,9 @@ Estado actual: extensión funcional en dev host (preview, export HTML/PDF, Shiki
 
 ## D. Documentación obligatoria
 
-- [ ] `README.md` en raíz (inglés recomendado para Marketplace)
-  - Qué hace, requisitos, comandos, settings, PDF/Chrome
-  - Screenshots embebidas
-- [ ] `CHANGELOG.md` (Keep a Changelog)
-- [ ] `LICENSE` en raíz (mismo texto que `package.json`)
+- [x] `README.md` en raíz (inglés)
+- [x] `CHANGELOG.md` (Keep a Changelog)
+- [x] `LICENSE` en raíz (ISC)
 - [ ] Sección **Known limitations** (sin Mermaid/KaTeX, imágenes remotas en export, etc.)
 - [ ] Enlace a `docs/export-security.md` para usuarios avanzados
 
@@ -53,13 +54,11 @@ Estado actual: extensión funcional en dev host (preview, export HTML/PDF, Shiki
 
 Shiki + Puppeteer inflan el `.vsix` si se incluye `node_modules` crudo.
 
-- [ ] `.vscodeignore` (excluir `test/`, `openspec/`, `.pi/`, docs internos, maps de dev)
-- [ ] Bundler (**esbuild** o **webpack**) para:
-  - [ ] Un solo bundle de extensión o chunks controlados
-  - [ ] Externalizar o tree-shake Shiki (langs/themes usados solamente)
-  - [ ] No empaquetar Chromium completo (PDF ya usa Chrome del sistema)
-- [ ] Script `vscode:prepublish` → compile + bundle
-- [ ] Probar `npx @vscode/vsce package` y tamaño del `.vsix` (objetivo razonable: &lt; 5–15 MB según estrategia)
+- [x] `.vscodeignore` (excluir `test/`, `openspec/`, `src/`, docs internos)
+- [x] **esbuild** → `dist/extension.js` + `media/github-markdown.css`
+- [x] `vscode:prepublish` → `npm run bundle:production`
+- [x] Script `npm run package` (`vsce package --no-dependencies`)
+- [ ] Medir tamaño del `.vsix` y ajustar si hace falta (tree-shake Shiki langs)
 - [ ] Probar instalación del `.vsix` en VS Code y Cursor limpios
 
 ---
