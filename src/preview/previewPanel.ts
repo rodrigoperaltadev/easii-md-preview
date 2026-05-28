@@ -6,6 +6,14 @@ import { getWebviewHtml } from "./webviewHtml";
 
 const REFRESH_DEBOUNCE_MS = 250;
 
+function escapeHtml(value: string): string {
+	return value
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;");
+}
+
 export class PreviewPanel {
 	private static currentPanel: PreviewPanel | undefined;
 
@@ -34,7 +42,7 @@ export class PreviewPanel {
 		);
 		this.disposables.push(changeSubscription);
 
-		this.update(document);
+		void this.renderPreview(document);
 	}
 
 	static createOrShow(
@@ -44,7 +52,7 @@ export class PreviewPanel {
 		if (PreviewPanel.currentPanel) {
 			PreviewPanel.currentPanel.document = document;
 			PreviewPanel.currentPanel.panel.reveal(vscode.ViewColumn.Beside);
-			PreviewPanel.currentPanel.update(document);
+			void PreviewPanel.currentPanel.renderPreview(document);
 			return;
 		}
 
@@ -63,14 +71,32 @@ export class PreviewPanel {
 	}
 
 	update(document = this.document): void {
+		void this.renderPreview(document);
+	}
+
+	private async renderPreview(document = this.document): Promise<void> {
 		this.document = document;
 		setPreviewTrackedDocument(document);
 		this.panel.title = `Preview: ${document.fileName.split(/[\\/]/).pop() ?? "Markdown"}`;
-		this.panel.webview.html = getWebviewHtml(
-			this.panel.webview,
-			this.extensionUri,
-			renderMarkdown(document.getText()),
-		);
+
+		try {
+			const rendered = await renderMarkdown(document.getText());
+			this.panel.webview.html = getWebviewHtml(
+				this.panel.webview,
+				this.extensionUri,
+				rendered,
+			);
+		} catch (error) {
+			const message = escapeHtml(
+				error instanceof Error ? error.message : "Unknown render error",
+			);
+
+			this.panel.webview.html = getWebviewHtml(
+				this.panel.webview,
+				this.extensionUri,
+				`<p><strong>Preview render failed:</strong> ${message}</p>`,
+			);
+		}
 	}
 
 	dispose(): void {

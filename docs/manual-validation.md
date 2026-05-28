@@ -53,7 +53,12 @@ console.log('hello preview');
 
 See `docs/export-security.md` for the full export threat model.
 
+## Syntax Highlighting
+
+- [x] Fenced code blocks in preview show Shiki colors (light/dark follows VS Code theme).
+- [x] Exported HTML/PDF include highlighted code blocks (export uses light theme).
+
 ## Known MVP Limits
 - Scroll sync is deferred.
-- Syntax highlighting, Mermaid, and KaTeX are deferred in preview and export.
+- Mermaid and KaTeX are deferred.
 - Remote images are not included in export (security by design).

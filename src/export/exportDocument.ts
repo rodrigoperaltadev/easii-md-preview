@@ -1,7 +1,7 @@
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import * as vscode from "vscode";
-import { renderMarkdown } from "../markdown/renderer";
+import { renderMarkdownForExport } from "../markdown/renderer";
 import {
 	NO_MARKDOWN_EDITOR_MESSAGE,
 	resolveMarkdownDocument,
@@ -46,12 +46,12 @@ function formatSecuritySummary(result: EmbedAssetsResult): string | undefined {
 	return parts.length > 0 ? parts.join("; ") + "." : undefined;
 }
 
-function prepareExportHtml(
+async function prepareExportHtml(
 	extensionUri: vscode.Uri,
 	document: vscode.TextDocument,
 	format: ExportFormat,
-): { html: string; assetResult: EmbedAssetsResult } {
-	const rendered = renderMarkdown(document.getText());
+): Promise<{ html: string; assetResult: EmbedAssetsResult }> {
+	const rendered = await renderMarkdownForExport(document.getText());
 	const workspaceFolders = vscode.workspace.workspaceFolders ?? [];
 	const assetResult = embedLocalImages(
 		rendered,
@@ -91,7 +91,7 @@ export async function exportActiveDocument(
 		return;
 	}
 
-	const { html, assetResult } = prepareExportHtml(
+	const { html, assetResult } = await prepareExportHtml(
 		extensionUri,
 		document,
 		format,

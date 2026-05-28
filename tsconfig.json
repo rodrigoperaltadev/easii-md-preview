@@ -13,8 +13,11 @@
     "declarationMap": true,
     "sourceMap": true
   },
+  "include": ["src/**/*"],
   "exclude": [
     "node_modules",
-    "out"
+    "out",
+    "test",
+    "vitest.config.ts"
   ]
 }

@@ -48,6 +48,18 @@ export function getWebviewHtml(
     .markdown-body input[type='checkbox'] {
       pointer-events: none;
     }
+
+    .markdown-body pre.shiki {
+      overflow: auto;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .markdown-body pre.shiki code {
+      font-family: var(--vscode-editor-font-family, ui-monospace, monospace);
+      font-size: 0.85em;
+    }
   </style>
   <title>Easii Markdown Preview</title>
 </head>

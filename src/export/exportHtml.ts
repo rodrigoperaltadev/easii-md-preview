@@ -56,6 +56,18 @@ ${githubCss}
       color: #0969da;
       text-decoration: underline;
     }
+
+    .markdown-body pre.shiki {
+      overflow: auto;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .markdown-body pre.shiki code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.85em;
+    }
 ${pdfStyles}
   </style>
   <title>Markdown Export</title>
