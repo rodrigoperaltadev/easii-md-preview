@@ -54,4 +54,4 @@ Strict TDD is not active. Each task requires manual validation evidence.
 | tasks | complete |
 | apply | complete |
 | verify | complete (2026-05-27 — user validated preview, HTML export, PDF export) |
-| archive | pending |
+| archive | complete (2026-05-27 — synced to `openspec/specs/markdown-export/`, moved to `changes/archive/2026-05-27-markdown-pdf-export/`) |
