@@ -2,7 +2,7 @@ strict_tdd: false
 context: |
   easii-md-preview is a Unclassified software project project.
   Detected markers: none.
-  No reliable test runner was detected; verify testing manually before enabling strict TDD.
+  Unit tests run with Vitest (`npm test`) for renderer, sanitize, and export helpers.
   Unit tests: none.
   Integration tests: none.
   E2E tests: none.
@@ -22,15 +22,15 @@ rules:
 testing:
   detected: "2026-05-27"
   runner:
-    command: ""
-    framework: ""
+    command: "npm test"
+    framework: "vitest"
   layers:
-    unit: ""
+    unit: "npm test"
     integration: ""
     e2e: ""
   commands:
     unit:
-      []
+      - "npm test"
     integration:
       []
     e2e:
