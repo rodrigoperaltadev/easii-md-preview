@@ -41,7 +41,19 @@ console.log('hello preview');
 - [ ] Rapid typing does not visibly thrash the preview on every keystroke.
 - [ ] Closing the preview stops further updates when the source file keeps changing.
 
+## Export Checks
+
+- [ ] `Easii Markdown Preview: Export to HTML` saves a standalone `.html` file.
+- [ ] Opening the exported HTML in a browser shows headings, tables, task lists, and code blocks.
+- [ ] Exported HTML contains no executing scripts (CSP blocks scripts; sample `<script>` in source is stripped).
+- [ ] `Easii Markdown Preview: Export to PDF` creates a readable `.pdf` when Chrome/Edge is installed.
+- [ ] Long fenced code blocks wrap within the page width (no clipped horizontal overflow).
+- [ ] PDF export without a local browser shows a clear error (no hang).
+- [ ] Remote images in Markdown are omitted from export with a security notice in the success message.
+
+See `docs/export-security.md` for the full export threat model.
+
 ## Known MVP Limits
 - Scroll sync is deferred.
-- Syntax highlighting, Mermaid, and KaTeX are deferred.
-- Advanced relative asset/link handling is deferred.
+- Syntax highlighting, Mermaid, and KaTeX are deferred in preview and export.
+- Remote images are not included in export (security by design).
