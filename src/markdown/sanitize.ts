@@ -30,7 +30,11 @@ export function sanitizeRenderedHtml(html: string): string {
 		allowedTags,
 		allowedAttributes,
 		allowedSchemes: ["http", "https", "mailto"],
+		allowedSchemesByTag: {
+			img: ["http", "https"],
+		},
 		allowProtocolRelative: false,
+		disallowedTagsMode: "discard",
 		transformTags: {
 			a: sanitizeHtml.simpleTransform("a", {
 				rel: "noopener noreferrer",

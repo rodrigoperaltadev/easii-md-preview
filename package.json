@@ -11,7 +11,9 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:easiiMdPreview.openPreview"
+    "onCommand:easiiMdPreview.openPreview",
+    "onCommand:easiiMdPreview.exportHtml",
+    "onCommand:easiiMdPreview.exportPdf"
   ],
   "contributes": {
     "commands": [
@@ -19,8 +21,28 @@
         "command": "easiiMdPreview.openPreview",
         "title": "Easii Markdown Preview: Open Preview",
         "category": "Easii Markdown Preview"
+      },
+      {
+        "command": "easiiMdPreview.exportHtml",
+        "title": "Easii Markdown Preview: Export to HTML",
+        "category": "Easii Markdown Preview"
+      },
+      {
+        "command": "easiiMdPreview.exportPdf",
+        "title": "Easii Markdown Preview: Export to PDF",
+        "category": "Easii Markdown Preview"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Easii Markdown Preview",
+      "properties": {
+        "easiiMdPreview.pdf.executablePath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Absolute path to Chrome, Edge, or Chromium for PDF export. Leave empty to auto-detect a local browser."
+        }
+      }
+    }
   },
   "directories": {
     "doc": "docs"
@@ -48,6 +70,7 @@
     "github-markdown-css": "^5.9.0",
     "markdown-it": "^14.2.0",
     "markdown-it-task-lists": "^2.1.1",
+    "puppeteer-core": "^24.36.1",
     "sanitize-html": "^2.17.4"
   }
 }

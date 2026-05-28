@@ -1,38 +1,46 @@
 import * as vscode from "vscode";
+import { exportActiveDocument } from "./export/exportDocument";
 import { PreviewPanel } from "./preview/previewPanel";
+import {
+	NO_MARKDOWN_EDITOR_MESSAGE,
+	resolveMarkdownDocument,
+	trackMarkdownEditorFocus,
+} from "./utils/markdownDocument";
 
 const OPEN_PREVIEW_COMMAND = "easiiMdPreview.openPreview";
+const EXPORT_HTML_COMMAND = "easiiMdPreview.exportHtml";
+const EXPORT_PDF_COMMAND = "easiiMdPreview.exportPdf";
 
 export function activate(context: vscode.ExtensionContext): void {
+	trackMarkdownEditorFocus(context);
+
 	const openPreview = vscode.commands.registerCommand(
 		OPEN_PREVIEW_COMMAND,
 		() => {
-			const editor = vscode.window.activeTextEditor;
+			const document = resolveMarkdownDocument();
 
-			if (!editor || !isMarkdownDocument(editor.document)) {
-				vscode.window.showInformationMessage(
-					"Open a Markdown document before running Easii Markdown Preview.",
-				);
+			if (!document) {
+				void vscode.window.showInformationMessage(NO_MARKDOWN_EDITOR_MESSAGE);
 				return;
 			}
 
-			PreviewPanel.createOrShow(context.extensionUri, editor.document);
+			PreviewPanel.createOrShow(context.extensionUri, document);
 		},
 	);
 
-	context.subscriptions.push(openPreview);
+	const exportHtml = vscode.commands.registerCommand(
+		EXPORT_HTML_COMMAND,
+		() => exportActiveDocument(context.extensionUri, "html"),
+	);
+
+	const exportPdf = vscode.commands.registerCommand(
+		EXPORT_PDF_COMMAND,
+		() => exportActiveDocument(context.extensionUri, "pdf"),
+	);
+
+	context.subscriptions.push(openPreview, exportHtml, exportPdf);
 }
 
 export function deactivate(): void {
 	// No global resources to dispose yet. Preview panels own their disposables.
-}
-
-function isMarkdownDocument(document: vscode.TextDocument): boolean {
-	const fileName = document.fileName.toLowerCase();
-
-	return (
-		document.languageId === "markdown" ||
-		fileName.endsWith(".md") ||
-		fileName.endsWith(".markdown")
-	);
 }

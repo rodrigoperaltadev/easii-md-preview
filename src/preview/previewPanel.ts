@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { renderMarkdown } from "../markdown/renderer";
 import { debounce } from "../utils/debounce";
+import { setPreviewTrackedDocument } from "../utils/markdownDocument";
 import { getWebviewHtml } from "./webviewHtml";
 
 const REFRESH_DEBOUNCE_MS = 250;
@@ -58,10 +59,12 @@ export class PreviewPanel {
 		);
 
 		PreviewPanel.currentPanel = new PreviewPanel(panel, extensionUri, document);
+		setPreviewTrackedDocument(document);
 	}
 
 	update(document = this.document): void {
 		this.document = document;
+		setPreviewTrackedDocument(document);
 		this.panel.title = `Preview: ${document.fileName.split(/[\\/]/).pop() ?? "Markdown"}`;
 		this.panel.webview.html = getWebviewHtml(
 			this.panel.webview,
@@ -72,6 +75,7 @@ export class PreviewPanel {
 
 	dispose(): void {
 		PreviewPanel.currentPanel = undefined;
+		setPreviewTrackedDocument(undefined);
 		this.debouncedUpdate.cancel();
 
 		while (this.disposables.length > 0) {
