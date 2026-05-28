@@ -1,13 +1,10 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as vscode from "vscode";
+import { GITHUB_MARKDOWN_CSS_PARTS } from "../constants/assets";
 import { isPathWithinRoot } from "./security";
 
-const GITHUB_CSS_RELATIVE = path.join(
-	"node_modules",
-	"github-markdown-css",
-	"github-markdown.css",
-);
+const GITHUB_CSS_RELATIVE = path.join(...GITHUB_MARKDOWN_CSS_PARTS);
 
 /**
  * Reads github-markdown-css only from the extension install directory.

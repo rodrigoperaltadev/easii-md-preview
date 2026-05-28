@@ -1,14 +1,25 @@
 {
   "name": "easii-md-preview",
+  "publisher": "RodrigoAlexisPeralta",
   "displayName": "Easii Markdown Preview",
   "version": "1.0.0",
-  "description": "GitHub-like Markdown preview for VS Code and Cursor.",
-  "main": "./out/extension.js",
+  "description": "GitHub-like Markdown preview with Shiki highlighting and secure HTML/PDF export for VS Code and Cursor.",
+  "main": "./dist/extension.js",
+  "icon": "images/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rodrigoperaltadev/easii-md-preview.git"
+  },
+  "homepage": "https://github.com/rodrigoperaltadev/easii-md-preview#readme",
+  "bugs": {
+    "url": "https://github.com/rodrigoperaltadev/easii-md-preview/issues"
+  },
   "engines": {
-    "vscode": "^1.100.0"
+    "vscode": "^1.120.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Visualization"
   ],
   "activationEvents": [
     "onCommand:easiiMdPreview.openPreview",
@@ -48,23 +59,38 @@
     "doc": "docs"
   },
   "scripts": {
-    "compile": "tsc -p ./",
+    "bundle": "node esbuild.mjs",
+    "bundle:production": "node esbuild.mjs --production",
+    "compile": "npm run bundle",
     "typecheck": "tsc -p ./ --noEmit",
-    "watch": "tsc -watch -p ./",
+    "watch": "node esbuild.mjs --watch",
+    "vscode:prepublish": "npm run bundle:production",
+    "package": "vsce package --no-dependencies",
     "test": "vitest run",
     "test:watch": "vitest"
   },
   "keywords": [
     "markdown",
     "preview",
+    "github",
+    "pdf",
+    "export",
+    "shiki",
+    "syntax highlighting",
+    "cursor",
     "vscode"
   ],
-  "author": "",
+  "author": {
+    "name": "Rodrigo Peralta",
+    "email": "rodrigoperalta.dev@gmail.com"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
     "@types/sanitize-html": "^2.16.1",
     "@types/vscode": "^1.120.0",
+    "@vscode/vsce": "^3.7.1",
+    "esbuild": "^0.25.5",
     "typescript": "^6.0.3",
     "vitest": "^3.2.4"
   },

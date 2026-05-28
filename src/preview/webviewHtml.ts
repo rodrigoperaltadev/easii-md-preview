@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { GITHUB_MARKDOWN_CSS_PARTS } from "../constants/assets";
 
 export function getWebviewHtml(
 	webview: vscode.Webview,
@@ -6,12 +7,7 @@ export function getWebviewHtml(
 	renderedMarkdown: string,
 ): string {
 	const githubMarkdownCssUri = webview.asWebviewUri(
-		vscode.Uri.joinPath(
-			extensionUri,
-			"node_modules",
-			"github-markdown-css",
-			"github-markdown.css",
-		),
+		vscode.Uri.joinPath(extensionUri, ...GITHUB_MARKDOWN_CSS_PARTS),
 	);
 
 	const csp = [
