@@ -51,7 +51,8 @@
     "compile": "tsc -p ./",
     "typecheck": "tsc -p ./ --noEmit",
     "watch": "tsc -watch -p ./",
-    "test": "npm run compile"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [
     "markdown",
@@ -64,7 +65,8 @@
     "@types/markdown-it": "^14.1.2",
     "@types/sanitize-html": "^2.16.1",
     "@types/vscode": "^1.120.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "github-markdown-css": "^5.9.0",
